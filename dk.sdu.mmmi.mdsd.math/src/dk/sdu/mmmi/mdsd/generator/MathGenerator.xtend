@@ -35,16 +35,17 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def void generateFile(MathExp exp, IFileSystemAccess2 access2) {
-		access2.generateFile(exp.name + '.java', generateJava())
+		access2.generateFile(exp.name + '.java', generateJava(exp))
 	}
 	
-	def generateJava() {
+	def generateJava(MathExp exp) {
 		return '''
 		package math_expression;
 		public class MathComputation {
 		
-		  public int x;
-		  public int y;
+		«FOR v : exp.variables»
+			public int «v.name»
+		«ENDFOR»
 		
 		  private External external;
 		  
