@@ -31,10 +31,40 @@ class MathGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val math = resource.allContents.filter(MathExp).next
-		val result = math.compute
-		result.displayPanel
-		
+		math.generateFile(fsa)
 	}
+	
+	def void generateFile(MathExp exp, IFileSystemAccess2 access2) {
+		access2.generateFile(exp.name + '.java', generateJava())
+	}
+	
+	def generateJava() {
+		return '''
+		package math_expression;
+		public class MathComputation {
+		
+		  public int x;
+		  public int y;
+		
+		  private External external;
+		  
+		  public MathComputation(External external) {
+		    this.external = external
+		  }
+		
+		  public void compute() {
+		    x = 2 + 2;
+		    y = this.external.sqrt(x);
+		  }
+		
+		  interface External {
+		    public int sqrt(int n);
+		  }
+		}
+		'''
+	}
+	
+	
 		
 	def void displayPanel(Map<String, Integer> result) {
 		var resultString = ""
