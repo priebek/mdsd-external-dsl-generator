@@ -12,6 +12,7 @@ import dk.sdu.mmmi.mdsd.math.Mult
 import dk.sdu.mmmi.mdsd.math.Plus
 import dk.sdu.mmmi.mdsd.math.VarBinding
 import dk.sdu.mmmi.mdsd.math.VariableUse
+import dk.sdu.mmmi.mdsd.math.ExternalDef
 import java.util.HashMap
 import java.util.Map
 import javax.swing.JOptionPane
@@ -44,9 +45,9 @@ class MathGenerator extends AbstractGenerator {
 
 		public class «exp.name» {
 		
-		«FOR v : exp.variables»
+				«FOR v : exp.variables»
 				public int «v.name»;
-		«ENDFOR»
+				«ENDFOR»
 		
 //			private External external;
 			  
@@ -55,16 +56,33 @@ class MathGenerator extends AbstractGenerator {
 //			}
 		
 			public void compute() {
-	  	«FOR v : exp.variables»
+	  			«FOR v : exp.variables»
 				«v.name» = compute«v.name.toFirstUpper»();
-		«ENDFOR»
+				«ENDFOR»
 			}
+			
+			«FOR v : exp.variables»
+			private int compute«v.name.toFirstUpper»() {
+				
+			}
+			«ENDFOR»
+			
+			«IF exp.externals.size > 0»
+			interface External
+				«FOR func : exp.externals»
+					int «func.name»(«func.generateParameters»)
+				«ENDFOR»
+			«ENDIF»
 			
 //			interface External {
 //			  public int sqrt(int n);
 //			}
 		}
 		'''
+	}
+	
+	def String generateParameters(ExternalDef ext) {
+		return 'int 5';
 	}
 	
 	

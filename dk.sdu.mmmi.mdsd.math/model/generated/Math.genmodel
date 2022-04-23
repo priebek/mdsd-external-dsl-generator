@@ -9,6 +9,11 @@
     <genClasses ecoreClass="Math.ecore#//MathExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//MathExp/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//MathExp/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//MathExp/externals"/>
+    </genClasses>
+    <genClasses ecoreClass="Math.ecore#//ExternalDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//ExternalDef/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//ExternalDef/parameters"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//VarBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//VarBinding/expression"/>

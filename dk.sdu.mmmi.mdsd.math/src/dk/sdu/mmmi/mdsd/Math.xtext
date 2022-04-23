@@ -5,6 +5,12 @@ generate math "http://www.sdu.dk/mmmi/mdsd/Math"
 MathExp:
 	'program' name=ID
 	variables += VarBinding*
+	externals += ExternalDef*
+;
+
+// From class example MDSD Lec09
+ExternalDef:
+	'external' name=ID '(' parameters += ID (',' parameters += ID)* ')'
 ;
 
 VarBinding:
