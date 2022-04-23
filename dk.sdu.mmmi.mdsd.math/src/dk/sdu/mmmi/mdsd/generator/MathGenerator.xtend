@@ -40,27 +40,29 @@ class MathGenerator extends AbstractGenerator {
 	
 	def generateJava(MathExp exp) {
 		return '''
-		package math_expression;
-		public class MathComputation {
+		package math_expression.test;
+
+		public class «exp.name» {
 		
 		«FOR v : exp.variables»
-			public int «v.name»
+				public int «v.name»;
 		«ENDFOR»
 		
-		  private External external;
-		  
-		  public MathComputation(External external) {
-		    this.external = external
-		  }
+//			private External external;
+			  
+//			public MathComputation(External external) {
+//			  this.external = external
+//			}
 		
-		  public void compute() {
-		    x = 2 + 2;
-		    y = this.external.sqrt(x);
-		  }
-		
-		  interface External {
-		    public int sqrt(int n);
-		  }
+			public void compute() {
+	  	«FOR v : exp.variables»
+				«v.name» = compute«v.name.toFirstUpper»();
+		«ENDFOR»
+			}
+			
+//			interface External {
+//			  public int sqrt(int n);
+//			}
 		}
 		'''
 	}
