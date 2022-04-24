@@ -10,7 +10,7 @@ MathExp:
 
 // From class example MDSD Lec09
 ExternalDef:
-	'external' name=ID '(' parameters += ID (',' parameters += ID)* ')'
+	'external' name=ID '(' (parameters += 'int' (',' parameters += 'int')*)? ')'
 ;
 
 VarBinding:
@@ -26,7 +26,11 @@ Factor returns Expression:
 ;
 
 Primary returns Expression:
-	{MathNumber} value=INT  | '(' Exp ')'  |  VariableUse | LetBinding
+	{MathNumber} value=INT | {Parenthesis} '(' exp=Exp ')'  |  VariableUse | LetBinding | ExternalPart
+;
+
+ExternalPart:
+	ref=[ExternalDef] '(' (args += Exp (',' args += Exp)*)? ')'
 ;
 
 LetBinding:

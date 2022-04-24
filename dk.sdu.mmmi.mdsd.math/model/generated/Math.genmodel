@@ -19,6 +19,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//VarBinding/expression"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//Expression"/>
+    <genClasses ecoreClass="Math.ecore#//ExternalUse">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalUse/met"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalUse/args"/>
+    </genClasses>
     <genClasses ecoreClass="Math.ecore#//LetBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//LetBinding/binding"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//LetBinding/body"/>
@@ -47,6 +51,9 @@
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//MathNumber">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//MathNumber/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Math.ecore#//Parenthesis">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Parenthesis/exp"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
