@@ -49,11 +49,13 @@ class MathGenerator extends AbstractGenerator {
 				public int «v.name»;
 				«ENDFOR»
 		
-//			private External external;
+			«IF exp.externals.size != 0»
+			private External external;
 			  
-//			public MathComputation(External external) {
-//			  this.external = external
-//			}
+			public «exp.name»(External external) {
+			  this.external = external
+			}
+			«ENDIF»
 		
 			public void compute() {
 	  			«FOR v : exp.variables»
@@ -63,15 +65,15 @@ class MathGenerator extends AbstractGenerator {
 			
 			«FOR v : exp.variables»
 			private int compute«v.name.toFirstUpper»() {
-				
 			}
 			«ENDFOR»
 			
 			«IF exp.externals.size > 0»
-			interface External
+			interface External {
 				«FOR func : exp.externals»
 					int «func.name»(«func.generateParameters»)
 				«ENDFOR»
+			}
 			«ENDIF»
 			
 //			interface External {
@@ -84,8 +86,6 @@ class MathGenerator extends AbstractGenerator {
 	def String generateParameters(ExternalDef ext) {
 		return 'int 5';
 	}
-	
-	
 		
 	def void displayPanel(Map<String, Integer> result) {
 		var resultString = ""
