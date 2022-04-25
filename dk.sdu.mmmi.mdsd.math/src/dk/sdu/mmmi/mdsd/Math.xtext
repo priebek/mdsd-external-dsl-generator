@@ -29,6 +29,10 @@ Primary returns Expression:
 	{MathNumber} value=INT | {Parenthesis} '(' exp=Exp ')'  |  VariableUse | LetBinding | ExternalPart
 ;
 
+Parenthesis returns Expression:
+	{Parenthesis} '(' exp=Exp ')'
+;
+
 ExternalPart:
 	ref=[ExternalDef] '(' (args += Exp (',' args += Exp)*)? ')'
 ;

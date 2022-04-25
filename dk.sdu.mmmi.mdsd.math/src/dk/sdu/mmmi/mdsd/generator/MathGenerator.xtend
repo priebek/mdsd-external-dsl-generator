@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import dk.sdu.mmmi.mdsd.math.Parenthesis
 
 /**
  * Generates code from your model files on save.
@@ -27,7 +28,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class MathGenerator extends AbstractGenerator {
 	
-	static Map<String, Integer> variables;
+	static Map<String, String> variables;
 	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val math = resource.allContents.filter(MathExp).next
@@ -39,6 +40,8 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def generateJava(MathExp exp) {
+		exp.compute()
+		
 return '''
 package math_expression.test;
 
@@ -58,7 +61,7 @@ public class «exp.name» {
 
 	public void compute() {
 		«FOR v : exp.variables»
-		«exp.compute()»
+		«v.name» = «v.computeExpression»;
 		«ENDFOR»
 	}
 	
@@ -87,53 +90,57 @@ public class «exp.name» {
 		}
 	}
 		
-	def String compute(MathExp math) {
+	def static compute(MathExp math) {
 		variables = new HashMap()
 		for(varBinding: math.variables)
 			varBinding.computeExpression()
-		return variables.toString()
+		variables
 	}
 
-	def static dispatch int computeExpression(VarBinding binding) {
+	def static dispatch String computeExpression(VarBinding binding) {
 		variables.put(binding.name, binding.expression.computeExpression())
 		return variables.get(binding.name)
 	}
 
-	def static dispatch int computeExpression(MathNumber exp) {
-		exp.value
+	def static dispatch String computeExpression(MathNumber exp) {
+		exp.value.toString
 	}
-	def static dispatch int computeExpression(Plus exp) {
-		exp.left.computeExpression + exp.right.computeExpression
+	def static dispatch String computeExpression(Plus exp) {
+		exp.left.computeExpression + ' + ' + exp.right.computeExpression
 	}
 
-	def static dispatch int computeExpression(Minus exp) {
-		exp.left.computeExpression - exp.right.computeExpression
+	def static dispatch String computeExpression(Minus exp) {
+		exp.left.computeExpression + ' - ' + exp.right.computeExpression
 	}
 	
-	def static dispatch int computeExpression(Mult exp) {
-		exp.left.computeExpression * exp.right.computeExpression
+	def static dispatch String computeExpression(Mult exp) {
+		exp.left.computeExpression + ' * ' + exp.right.computeExpression
 	}
 	
-	def static dispatch int computeExpression(Div exp) {
-		exp.left.computeExpression / exp.right.computeExpression
+	def static dispatch String computeExpression(Div exp) {
+		exp.left.computeExpression + ' / ' + exp.right.computeExpression
 	}
 
-	def static dispatch int computeExpression(LetBinding exp) {
-		exp.body.computeExpression
+	def static dispatch String computeExpression(LetBinding exp) {
+		"(" + exp.body.computeExpression + ")"
 	}
 
-	def static dispatch int computeExpression(VariableUse exp) {
-		exp.ref.computeBinding
+	def static dispatch String computeExpression(VariableUse exp) {
+		"(" + exp.ref.computeBinding + ")"
+	}
+	
+	def static dispatch String computeExpression(Parenthesis exp){
+		"(" + exp.exp.computeExpression + " )"
 	}
 
-	def static dispatch int computeBinding(VarBinding binding){
+	def static dispatch String computeBinding(VarBinding binding){
 		if(!variables.containsKey(binding.name))
 			binding.computeExpression()			
 		variables.get(binding.name)
 	}
 
-	def static dispatch int computeBinding(LetBinding binding){
-		binding.binding.computeExpression
+	def static dispatch String computeBinding(LetBinding binding){
+		"(" + binding.binding.computeExpression + ")"
 	}
 	
 }
