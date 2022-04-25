@@ -41,40 +41,56 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def generateJava(MathExp exp) {
-		exp.compute()
-		
-return '''
-package math_expression.test;
+		return '''
+package math_expression;
 
 public class «exp.name» {
 
-	«FOR v : exp.variables»
-	public int «v.name»;
-	«ENDFOR»
+	«exp.genVariables»
 
-	«IF exp.externals.size != 0»
-	private External external;
-	  
-	public «exp.name»(External external) {
-	  this.external = external;
-	}
-	«ENDIF»
-
-	public void compute() {
-		«FOR v : exp.variables»
-		«v.name» = «v.computeExpression»;
-		«ENDFOR»
+	«exp.genCompute»
+	
+	«exp.genExternal»
+}
+'''
 	}
 	
-	«IF exp.externals.size > 0»
-	interface External {
-		«FOR func : exp.externals»
-			int «func.name»(«func.genExtFunc»);
-		«ENDFOR»
+	def String genVariables(MathExp exp) {
+		return '''
+«FOR v : exp.variables»
+public int «v.name»;
+«ENDFOR»
+'''
 	}
-	«ENDIF»
+	
+	def String genCompute(MathExp exp) {
+		exp.compute()
+		
+		return '''
+public void compute() {
+	«FOR v : exp.variables»
+	«v.name» = «v.computeExpression»;
+	«ENDFOR»
 }
-		'''
+'''
+	}
+	
+	def String genExternal(MathExp exp) {
+		return '''
+«IF exp.externals.size > 0»
+private External external;
+  
+public «exp.name»(External external) {
+	this.external = external;
+}
+
+interface External {
+	«FOR func : exp.externals»
+		int «func.name»(«func.genExtFunc»);
+	«ENDFOR»
+}
+«ENDIF»
+'''
 	}
 	
 	def String genExtFunc(ExternalDef ext) {
