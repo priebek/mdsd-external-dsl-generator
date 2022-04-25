@@ -18,8 +18,8 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ExternalUse" eSuperTypes="#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="met" eType="#//ExternalDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalPart" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//ExternalDef"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

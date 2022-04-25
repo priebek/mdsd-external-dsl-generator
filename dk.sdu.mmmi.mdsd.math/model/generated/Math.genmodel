@@ -19,9 +19,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//VarBinding/expression"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//Expression"/>
-    <genClasses ecoreClass="Math.ecore#//ExternalUse">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalUse/met"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalUse/args"/>
+    <genClasses ecoreClass="Math.ecore#//ExternalPart">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalPart/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//ExternalPart/args"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//LetBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//LetBinding/binding"/>
