@@ -20,6 +20,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import dk.sdu.mmmi.mdsd.math.Parenthesis
+import dk.sdu.mmmi.mdsd.math.ExternalPart
 
 /**
  * Generates code from your model files on save.
@@ -141,6 +142,16 @@ public class «exp.name» {
 
 	def static dispatch String computeBinding(LetBinding binding){
 		"(" + binding.binding.computeExpression + ")"
+	}
+	
+	def static dispatch String computeExpression(ExternalPart exp){
+		if(exp.args.size > 0){
+			return '''
+			this.external.«exp.ref.name»(«FOR x : exp.args SEPARATOR ', '»«x.computeExpression»«ENDFOR»)
+			'''
+		}else{
+			return '''this.external.«exp.ref.name»()'''
+		}
 	}
 	
 }
