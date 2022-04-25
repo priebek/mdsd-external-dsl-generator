@@ -4,8 +4,8 @@ generate math "http://www.sdu.dk/mmmi/mdsd/Math"
 
 MathExp:
 	'program' name=ID
-	variables += VarBinding*
 	externals += ExternalDef*
+	variables += VarBinding*
 ;
 
 // From class example MDSD Lec09
@@ -26,11 +26,11 @@ Factor returns Expression:
 ;
 
 Primary returns Expression:
-	{MathNumber} value=INT | {Parenthesis} '(' exp=Exp ')'  |  VariableUse | LetBinding | ExternalPart
+	{MathNumber} value=INT | Parenthesis |  VariableUse | LetBinding | ExternalPart
 ;
 
-Parenthesis returns Expression:
-	{Parenthesis} '(' exp=Exp ')'
+Parenthesis:
+	'(' exp=Exp ')'
 ;
 
 ExternalPart:
